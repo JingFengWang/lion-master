@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="lion-algo" />
         <module name="lion-kafka" />
         <module name="lion-micro-java-actor" />
         <module name="lion-scala" />
@@ -14,6 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="lion-algo" target="1.7" />
       <module name="lion-kafka" target="1.7" />
       <module name="lion-master" target="1.7" />
       <module name="lion-micro-java-actor" target="1.7" />

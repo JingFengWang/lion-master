@@ -1,10 +1,6 @@
 package org.lion.actor;
 
-import org.lion.ActorManager;
-import org.lion.DefaultActorManager;
-import org.lion.DefaultMessage;
-import org.lion.MessageEvent;
-import org.lion.utils.Utils;
+import org.lion.actor.utils.Utils;
 
 import java.util.Date;
 import java.util.LinkedList;

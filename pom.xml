@@ -14,6 +14,7 @@
       <module>lion-scala</module>
       <module>lion-spark</module>
       <module>lion-micro-java-actor</module>
+      <module>lion-algo</module>
   </modules>
 
   <name>lion-master</name>

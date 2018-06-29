@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/lion-algo/lion-algo.iml" filepath="$PROJECT_DIR$/lion-algo/lion-algo.iml" />
       <module fileurl="file://$PROJECT_DIR$/lion-kafka/lion-kafka.iml" filepath="$PROJECT_DIR$/lion-kafka/lion-kafka.iml" />
       <module fileurl="file://$PROJECT_DIR$/lion-master.iml" filepath="$PROJECT_DIR$/lion-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/lion-micro-java-actor/lion-micro-java-actor.iml" filepath="$PROJECT_DIR$/lion-micro-java-actor/lion-micro-java-actor.iml" />
