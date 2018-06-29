@@ -23,7 +23,7 @@ class HashPartitioner(partitions: Int) extends Partitioner {
       if (mod < 0) {
         mod + partitions
       } else {
-        mod // Guard against negative hash codes
+        mod // 防止负散列码
       }
     }
   }

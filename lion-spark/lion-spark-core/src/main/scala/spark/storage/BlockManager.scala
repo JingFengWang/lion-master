@@ -6,11 +6,7 @@ import spark.Logging
 import sun.nio.ch.DirectBuffer
 
 
-class BlockManager extends Logging {
-
-
-
-}
+class BlockManager extends Logging {}
 
 private[spark]
 object BlockManager extends Logging {
