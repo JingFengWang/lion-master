@@ -17,13 +17,12 @@ import spark.storage.StorageLevel
 
 private[spark] sealed trait CacheTrackerMessage
 
-private[spark] case class AddedToCache(rddId: Int, partition: Int, host: String, size: Long = 0L)
-  extends CacheTrackerMessage
-private[spark] case class DroppedFromCache(rddId: Int, partition: Int, host: String, size: Long = 0L)
-  extends CacheTrackerMessage
+private[spark] case class AddedToCache(rddId: Int, partition: Int, host: String, size: Long = 0L) extends CacheTrackerMessage
+private[spark] case class DroppedFromCache(rddId: Int, partition: Int, host: String, size: Long = 0L) extends CacheTrackerMessage
 private[spark] case class MemoryCacheLost(host: String) extends CacheTrackerMessage
 private[spark] case class RegisterRDD(rddId: Int, numPartitions: Int) extends CacheTrackerMessage
 private[spark] case class SlaveCacheStarted(host: String, size: Long) extends CacheTrackerMessage
+
 private[spark] case object GetCacheStatus extends CacheTrackerMessage
 private[spark] case object GetCacheLocations extends CacheTrackerMessage
 private[spark] case object StopCacheTracker extends CacheTrackerMessage
@@ -90,16 +89,12 @@ private[spark] class CacheTrackerActor extends Actor with Logging {
   }
 }
 
-private[spark] class CacheTracker(actorSystem: ActorSystem, isMaster: Boolean, blockManager: BlockManager)
-  extends Logging {
- 
+private[spark] class CacheTracker(actorSystem: ActorSystem, isMaster: Boolean, blockManager: BlockManager) extends Logging {
   // Tracker actor on the master, or remote reference to it on workers
   val ip: String = System.getProperty("spark.master.host", "localhost")
   val port: Int = System.getProperty("spark.master.port", "7077").toInt
   val actorName: String = "CacheTracker"
-
   val timeout = 10.seconds
-  
   var trackerActor: ActorRef = if (isMaster) {
     val actor = actorSystem.actorOf(Props[CacheTrackerActor], name = actorName)
     logInfo("Registered CacheTrackerActor actor")
@@ -112,6 +107,7 @@ private[spark] class CacheTracker(actorSystem: ActorSystem, isMaster: Boolean, b
   val registeredRddIds = new HashSet[Int]
 
   // Remembers which splits are currently being loaded (on worker nodes)
+  // 记住当前正在加载哪些拆分（在 worker 节点）
   val loading = new HashSet[String]
 
   // Send a message to the trackerActor and get its result within a default timeout, or
@@ -121,16 +117,13 @@ private[spark] class CacheTracker(actorSystem: ActorSystem, isMaster: Boolean, b
       val future = trackerActor.ask(message)(timeout)
       return Await.result(future, timeout)
     } catch {
-      case e: Exception =>
-        throw new SparkException("Error communicating with CacheTracker", e)
+      case e: Exception => throw new SparkException("Error communicating with CacheTracker", e)
     }
   }
 
   // Send a one-way message to the trackerActor, to which we expect it to reply with true.
   def communicate(message: Any) {
-    if (askTracker(message) != true) {
-      throw new SparkException("Error reply received from CacheTracker")
-    }
+    if (askTracker(message) != true) throw new SparkException("Error reply received from CacheTracker")
   }
   
   // Registers an RDD (on master only)
@@ -167,9 +160,13 @@ private[spark] class CacheTracker(actorSystem: ActorSystem, isMaster: Boolean, b
   }
   
   // Gets or computes an RDD split
+  // 得到或计算一个RDD划分
   def getOrCompute[T](rdd: RDD[T], split: Split, storageLevel: StorageLevel): Iterator[T] = {
+
     val key = "rdd_%d_%d".format(rdd.id, split.index)
+
     logInfo("Cache key is " + key)
+
     blockManager.get(key) match {
       case Some(cachedValues) =>
         // Split is in cache, so just return its values
@@ -213,7 +210,6 @@ private[spark] class CacheTracker(actorSystem: ActorSystem, isMaster: Boolean, b
         try {
           // Try to put this block in the blockManager
           blockManager.put(key, elements, storageLevel, true)
-          //future.apply() // Wait for the reply from the cache tracker
         } finally {
           loading.synchronized {
             loading.remove(key)
