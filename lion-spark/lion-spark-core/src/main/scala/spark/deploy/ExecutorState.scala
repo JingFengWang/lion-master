@@ -8,4 +8,5 @@ object ExecutorState extends Enumeration("LAUNCHING", "LOADING", "RUNNING", "KIL
   type ExecutorState = Value
 
   def isFinished(state: ExecutorState): Boolean = Seq(KILLED, FAILED, LOST).contains(state)
+
 }

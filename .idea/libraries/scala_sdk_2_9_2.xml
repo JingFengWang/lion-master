@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="scala-sdk-2.9.2" type="Scala">
+    <properties>
+      <option name="languageLevel" value="Scala_2_9" />
+      <compiler-classpath>
+        <root url="file://C:/app/scala-2.9.2/lib/scala-compiler.jar" />
+        <root url="file://C:/app/scala-2.9.2/lib/scala-library.jar" />
+      </compiler-classpath>
+    </properties>
+    <CLASSES>
+      <root url="jar://C:/app/scala-2.9.2/lib/scala-library.jar!/" />
+      <root url="jar://C:/app/scala-2.9.2/lib/scala-swing.jar!/" />
+      <root url="jar://C:/app/scala-2.9.2/src/scala-library-src.jar!/" />
+      <root url="jar://C:/app/scala-2.9.2/src/scala-swing-src.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
